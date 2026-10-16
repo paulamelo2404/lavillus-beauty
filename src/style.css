@@ -1,1 +1,43 @@
 @import "tailwindcss";
+
+@theme {
+  /* ===== CORES DA MARCA ===== */
+
+  /* Dourado / Champagne (cor principal) */
+  --color-gold-50:  #FBF7EF;
+  --color-gold-100: #F5EBD4;
+  --color-gold-200: #EAD7A9;
+  --color-gold-300: #DDBF79;
+  --color-gold-400: #D0A84F;
+  --color-gold-500: #B8903A;
+  --color-gold-600: #9A7530;
+  --color-gold-700: #7A5A28;
+  --color-gold-800: #5E4520;
+  --color-gold-900: #433118;
+
+  /* Bege / Creme (fundos) */
+  --color-cream-50:  #FDFBF7;
+  --color-cream-100: #F8F3EA;
+  --color-cream-200: #F0E7D6;
+  --color-cream-300: #E5D6BC;
+  --color-cream-400: #D4C0A0;
+
+  /* Marrom Café (textos escuros) */
+  --color-coffee-700: #4A3728;
+  --color-coffee-800: #3A2A1E;
+  --color-coffee-900: #2A1E15;
+
+  /* Rosa (linha Soft Collagen) */
+  --color-rose-soft:   #E8B4B8;
+  --color-rose-mid:    #D4898E;
+  --color-rose-deep:   #B8686E;
+
+  /* Azul Royal (linha Sublime Blond) */
+  --color-royal-soft:  #7BA7D9;
+  --color-royal-mid:   #3E6FB0;
+  --color-royal-deep:  #1E4080;
+
+  /* ===== FONTES ===== */
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans:  "Inter", "Montserrat", system-ui, sans-serif;
+}

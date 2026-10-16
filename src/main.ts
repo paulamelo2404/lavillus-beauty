@@ -8,6 +8,7 @@ import { Hero } from './components/sections/Hero'
 import { About } from './components/sections/About'
 import { Technology } from './components/sections/Technology'
 import { Collection, initCollection } from './components/sections/Collection'
+import { WhyUs } from './components/sections/WhyUs'
 import { addToCart } from './utils/cart'
 import { products } from './data/products'
 
@@ -21,18 +22,13 @@ app.innerHTML = `
     ${About()}
     ${Technology()}
     ${Collection()}
+    ${WhyUs()}
   </main>
 `
 
-// Inicializa o header (carrinho + menu mobile)
 initHeader()
-
-// Inicializa a collection (filtros + add to cart)
 initCollection()
 
-// =====================================================
-// ADD TO CART — clique global nos botões
-// =====================================================
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement
   const addButton = target.closest('[data-add-to-cart]') as HTMLElement | null
@@ -47,7 +43,6 @@ document.addEventListener('click', (event) => {
 
   addToCart(product, 1)
 
-  // Feedback visual: botão vira "Added ✓" por 1.5s
   const originalText = addButton.textContent
   addButton.textContent = 'Added ✓'
   addButton.classList.add('bg-gold-700')

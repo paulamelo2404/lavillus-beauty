@@ -1,86 +1,90 @@
 // =====================================================
-// HERO — Primeira dobra do site (responsivo)
-// =====================================================
-// Mobile-first: pensado primeiro pra celular, depois cresce.
-// Breakpoints Tailwind: sm=640px | md=768px | lg=1024px | xl=1280px
+// HERO — Primeira dobra com vídeo de fundo
 // =====================================================
 
 export function Hero(): string {
   return `
     <section
       id="hero"
-      class="relative min-h-screen flex items-center justify-center overflow-hidden
-             bg-linear-to-b from-cream-100 via-cream-50 to-cream-100
-             px-4 sm:px-6 lg:px-8"
+      class="relative min-h-screen flex items-center justify-center overflow-hidden bg-coffee-900"
     >
 
-      <!-- Brilho dourado decorativo no fundo (não interfere no clique) -->
-      <div
-        class="absolute inset-0 opacity-30 pointer-events-none"
-        style="background: radial-gradient(circle at 70% 40%, rgba(184,144,58,0.25), transparent 60%);"
-      ></div>
+      <!-- VÍDEO DE FUNDO 100% SÓLIDO -->
+      <video
+        autoplay
+        muted
+        loop
+        playsinline
+        class="absolute inset-0 w-full h-full object-cover z-0"
+      >
+        <source src="/hero/hero-video.mp4" type="video/mp4" />
+      </video>
+
+      <!-- FILTRO ESCURO APENAS ATRÁS DO TEXTO (Gradiente radial) -->
+      <!-- Isso deixa as bordas do vídeo 100% visíveis e escurece só o centro -->
+      <div class="absolute inset-0 z-10" 
+           style="background: radial-gradient(circle at center, rgba(42, 30, 21, 0.6) 0%, rgba(42, 30, 21, 0.2) 60%, transparent 100%);">
+      </div>
 
       <!-- CONTEÚDO CENTRAL -->
-      <div class="relative z-10 w-full max-w-5xl mx-auto text-center
-                  py-24 sm:py-28 lg:py-32">
+      <!-- Mudei o 'items-center' pra puxar um pouco pra cima e corrigir o espaço vazio embaixo -->
+      <div class="relative z-20 w-full max-w-6xl mx-auto text-center
+                  px-4 sm:px-6 lg:px-8
+                  pt-20 pb-16 sm:pt-24 sm:pb-20 flex flex-col items-center">
 
-        <!-- SUBTÍTULO SUPERIOR -->
-        <!-- Celular: fonte pequena | Desktop: espaçamento maior entre letras -->
+        <!-- Subtítulo -->
         <p class="font-sans text-[10px] sm:text-xs lg:text-sm
-                  tracking-[0.3em] sm:tracking-[0.4em] lg:tracking-[0.5em]
-                  text-gold-600 mb-4 sm:mb-6">
+                  tracking-[0.4em] sm:tracking-[0.5em] lg:tracking-[0.6em]
+                  text-white font-semibold mb-4 sm:mb-6">
           BRAZILIAN PROFESSIONAL HAIR CARE
         </p>
 
-        <!-- TÍTULO PRINCIPAL -->
-        <!-- Celular: text-4xl | Tablet: text-6xl | Desktop: text-8xl -->
-        <h1 class="font-serif font-medium text-coffee-800 leading-[1.05]
-                   text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl">
+        <!-- Título MAIOR e Branco -->
+        <h1 class="font-serif font-medium text-white leading-[1.05]
+                   text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7rem]">
           Professional Care.
           <br />
-          <span class="text-gold-600">Extraordinary</span> Results.
+          <span class="text-gold-400">Extraordinary</span> Results.
         </h1>
 
-        <!-- PARÁGRAFO DESCRITIVO -->
-        <!-- Celular: base | Tablet: lg | Largura máxima centralizada -->
-        <p class="font-sans text-coffee-700 leading-relaxed
+        <!-- Parágrafo Branco -->
+        <p class="font-sans text-white/90 leading-relaxed
                   text-sm sm:text-base md:text-lg
                   max-w-xl md:max-w-2xl mx-auto
-                  mt-6 sm:mt-8">
+                  mt-6 sm:mt-8 font-medium">
           Advanced hair technology crafted in Brazil — for professionals,
           distributors and partners who demand excellence.
         </p>
 
         <!-- BOTÕES -->
-        <!-- Celular: empilhados (flex-col) | sm+: lado a lado (flex-row) -->
         <div class="flex flex-col sm:flex-row items-center justify-center
-                    gap-3 sm:gap-4 mt-10 sm:mt-12">
+                    gap-4 sm:gap-6 mt-10 sm:mt-12 w-full sm:w-auto">
 
-          <!-- BOTÃO PRINCIPAL -->
+          <!-- Botão Primário -->
           <a
             href="#collection"
             class="w-full sm:w-auto text-center
-                   px-6 sm:px-8 py-3.5 sm:py-4
+                   px-8 sm:px-10 py-4 sm:py-5
                    bg-gold-500 text-white
-                   font-sans text-xs sm:text-sm tracking-widest uppercase
+                   font-sans text-xs sm:text-sm tracking-widest uppercase font-bold
                    rounded-sm
-                   hover:bg-gold-600 transition-all duration-300
-                   shadow-md hover:shadow-lg"
+                   hover:bg-gold-400 transition-all duration-300
+                   shadow-[0_4px_20px_rgba(184,144,58,0.4)] hover:shadow-[0_4px_30px_rgba(184,144,58,0.7)]"
           >
             Explore the Collection
           </a>
 
-          <!-- BOTÃO SECUNDÁRIO -->
+          <!-- Botão Secundário (Glassmorphism) -->
           <a
             href="https://wa.me/5516981404969"
             target="_blank"
             rel="noopener"
             class="w-full sm:w-auto text-center
-                   px-6 sm:px-8 py-3.5 sm:py-4
-                   border border-gold-500 text-gold-600
-                   font-sans text-xs sm:text-sm tracking-widest uppercase
+                   px-8 sm:px-10 py-4 sm:py-5
+                   border border-white/50 text-white bg-white/10 backdrop-blur-md
+                   font-sans text-xs sm:text-sm tracking-widest uppercase font-bold
                    rounded-sm
-                   hover:bg-gold-500 hover:text-white transition-all duration-300"
+                   hover:bg-white hover:text-coffee-900 transition-all duration-300"
           >
             Talk to Us
           </a>
@@ -88,14 +92,14 @@ export function Hero(): string {
 
       </div>
 
-      <!-- SETA INDICANDO SCROLL -->
-      <div class="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2
-                  text-gold-500 animate-bounce">
+      <!-- SETA INDICANDO SCROLL (Branca) -->
+      <div class="absolute bottom-10 left-1/2 -translate-x-1/2
+                  text-white animate-bounce z-20">
         <svg xmlns="http://www.w3.org/2000/svg"
-             width="20" height="20"
+             width="28" height="28"
              viewBox="0 0 24 24"
              fill="none" stroke="currentColor"
-             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="6 9 12 15 18 9"></polyline>
         </svg>
       </div>

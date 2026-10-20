@@ -4,6 +4,7 @@
 
 import './style.css'
 import { Header, initHeader } from './components/layout/Header'
+import { Footer } from './components/layout/Footer'
 import { Hero } from './components/sections/Hero'
 import { About } from './components/sections/About'
 import { Technology } from './components/sections/Technology'
@@ -11,6 +12,7 @@ import { Collection, initCollection } from './components/sections/Collection'
 import { WhyUs } from './components/sections/WhyUs'
 import { Distributor } from './components/sections/Distributor'
 import { International } from './components/sections/International'
+import { Contact } from './components/sections/Contact'
 import { addToCart } from './utils/cart'
 import { products } from './data/products'
 
@@ -27,7 +29,10 @@ app.innerHTML = `
     ${WhyUs()}
     ${Distributor()}
     ${International()}
+    ${Contact()}
   </main>
+
+  ${Footer()}
 `
 
 initHeader()

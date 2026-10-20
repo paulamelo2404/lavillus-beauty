@@ -4,7 +4,7 @@
 
 export function Contact(): string {
   return `
-    <section id="contact" class="relative bg-gradient-to-b
+    <section id="contact" class="relative bg-linear-to-b
                                  from-cream-100 to-cream-50
                                  py-20 sm:py-24 lg:py-32
                                  px-4 sm:px-6 lg:px-8">

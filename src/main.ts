@@ -5,6 +5,7 @@
 import './style.css'
 import { Header, initHeader } from './components/layout/Header'
 import { Footer } from './components/layout/Footer'
+import { CartDrawer, initCartDrawer } from './components/layout/CartDrawer'
 import { Hero } from './components/sections/Hero'
 import { About } from './components/sections/About'
 import { Technology } from './components/sections/Technology'
@@ -33,10 +34,12 @@ app.innerHTML = `
   </main>
 
   ${Footer()}
+  ${CartDrawer()}
 `
 
 initHeader()
 initCollection()
+initCartDrawer()
 
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement

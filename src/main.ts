@@ -41,10 +41,16 @@ initHeader()
 initCollection()
 initCartDrawer()
 
+// =====================================================
+// ADD TO CART — Evento delegado (evita duplicação)
+// =====================================================
+// Colocamos o listener apenas UMA VEZ no document.
+// Ele verifica se o clique foi em um botão de adicionar.
 document.addEventListener('click', (event) => {
   const target = event.target as HTMLElement
   const addButton = target.closest('[data-add-to-cart]') as HTMLElement | null
 
+  // Se não clicou em um botão de adicionar, ignora
   if (!addButton) return
 
   const productId = addButton.dataset.addToCart
@@ -53,8 +59,10 @@ document.addEventListener('click', (event) => {
   const product = products.find((p) => p.id === productId)
   if (!product) return
 
+  // 1. Adiciona o produto (a função addToCart já soma a quantidade se o item já existir)
   addToCart(product, 1)
 
+  // 2. Feedback visual rápido
   const originalText = addButton.textContent
   addButton.textContent = 'Added ✓'
   addButton.classList.add('bg-gold-700')
@@ -62,5 +70,12 @@ document.addEventListener('click', (event) => {
   setTimeout(() => {
     addButton.textContent = originalText
     addButton.classList.remove('bg-gold-700')
-  }, 1500)
+  }, 1200)
+
+  // 3. Abre o carrinho se estiver fechado
+  const drawer = document.getElementById('cart-drawer')
+  if (drawer && drawer.classList.contains('translate-x-full')) {
+    const cartButton = document.getElementById('cart-button')
+    if (cartButton) cartButton.click()
+  }
 })

@@ -1,5 +1,5 @@
 // =====================================================
-// CART DRAWER — Painel lateral do carrinho
+// CART DRAWER — Painel lateral (desktop) e inferior (mobile)
 // =====================================================
 
 import { getCart, removeFromCart, updateQuantity } from '../../utils/cart'
@@ -7,19 +7,26 @@ import { sendOrderToWhatsApp } from '../../utils/whatsapp'
 
 export function CartDrawer(): string {
   return `
-    <!-- OVERLAY (fundo escuro que fecha ao clicar) -->
+    <!-- OVERLAY (fundo escuro) -->
+    <!-- No mobile, volta a aparecer pra dar foco no carrinho -->
     <div
       id="cart-overlay"
-      class="fixed inset-0 bg-black/40 z-40 opacity-0 pointer-events-none transition-opacity duration-300"
+      class="fixed inset-0 bg-black/50 z-40 opacity-0 pointer-events-none transition-opacity duration-300"
     ></div>
 
-    <!-- DRAWER (painel lateral) -->
+    <!-- DRAWER -->
+    <!-- Mobile: sobe de baixo (bottom), ocupa 80% da altura, largura total -->
+    <!-- Desktop (sm+): abre da direita, ocupa altura total, largura de 420px -->
     <aside
       id="cart-drawer"
-      class="fixed top-0 right-0 h-full w-full sm:w-105
-             bg-cream-50 z-50
-             translate-x-full transition-transform duration-300
-             flex flex-col shadow-2xl"
+      class="fixed z-50 bg-cream-50 shadow-2xl flex flex-col
+             transition-transform duration-300 ease-out
+             
+             bottom-0 left-0 right-0 h-[80vh] rounded-t-2xl translate-y-full
+             
+             sm:top-0 sm:right-0 sm:bottom-auto sm:left-auto 
+             sm:h-full sm:w-105 sm:rounded-none sm:border-l sm:border-gold-200
+             sm:translate-y-0 sm:translate-x-full"
     >
 
       <!-- CABEÇALHO DO CARRINHO -->
@@ -31,7 +38,7 @@ export function CartDrawer(): string {
         </h2>
         <button
           id="cart-close"
-          class="text-coffee-700 hover:text-gold-600 transition"
+          class="text-coffee-700 hover:text-gold-600 transition p-1"
           aria-label="Close cart"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -50,8 +57,8 @@ export function CartDrawer(): string {
 
       <!-- RODAPÉ (TOTAL + BOTÃO WHATSAPP) -->
       <div class="border-t border-gold-200
-                  px-5 sm:px-6 py-5 space-y-4">
-
+                  px-5 sm:px-6 py-4 sm:py-5 space-y-4
+                  pb-safe">
         <div class="flex items-center justify-between">
           <span class="font-sans text-sm text-coffee-700">Total items:</span>
           <span id="cart-total" class="font-serif text-xl text-gold-600">0</span>
@@ -77,37 +84,42 @@ export function CartDrawer(): string {
   `
 }
 
-// =====================================================
-// INICIALIZAÇÃO — abrir, fechar, renderizar itens
-// =====================================================
 export function initCartDrawer() {
-  const overlay = document.getElementById('cart-overlay')
   const drawer = document.getElementById('cart-drawer')
+  const overlay = document.getElementById('cart-overlay')
   const openBtn = document.getElementById('cart-button')
   const closeBtn = document.getElementById('cart-close')
   const itemsContainer = document.getElementById('cart-items')
   const totalEl = document.getElementById('cart-total')
   const checkoutBtn = document.getElementById('checkout-whatsapp')
 
-  if (!overlay || !drawer || !openBtn || !closeBtn || !itemsContainer || !totalEl || !checkoutBtn) {
+  if (!drawer || !overlay || !openBtn || !closeBtn || !itemsContainer || !totalEl || !checkoutBtn) {
     return
   }
 
   // ---------- ABRIR / FECHAR ----------
   function openCart() {
+    // Mostra o fundo escuro
     overlay!.classList.remove('opacity-0', 'pointer-events-none')
-    drawer!.classList.remove('translate-x-full')
+    
+    // Remove as classes que escondem o carrinho
+    // Mobile: volta pra posição Y=0 (sobe)
+    // Desktop: volta pra posição X=0 (vem da direita)
+    drawer!.classList.remove('translate-y-full', 'sm:translate-x-full')
     renderCart()
   }
 
   function closeCart() {
+    // Esconde o fundo
     overlay!.classList.add('opacity-0', 'pointer-events-none')
-    drawer!.classList.add('translate-x-full')
+    
+    // Volta o carrinho pra baixo (mobile) e pra direita (desktop)
+    drawer!.classList.add('translate-y-full', 'sm:translate-x-full')
   }
 
   openBtn.addEventListener('click', openCart)
   closeBtn.addEventListener('click', closeCart)
-  overlay.addEventListener('click', closeCart)
+  overlay.addEventListener('click', closeCart) // Clicar fora fecha
 
   // ---------- RENDERIZAR ITENS ----------
   function renderCart() {
@@ -164,48 +176,43 @@ export function initCartDrawer() {
     `
       )
       .join('')
-
-    // Delegação de eventos dentro do container
-    itemsContainer!.querySelectorAll<HTMLElement>('[data-qty-minus]').forEach((btn) => {
-      btn.onclick = () => {
-        const id = btn.dataset.qtyMinus!
-        const item = getCart().find((i) => i.product.id === id)
-        if (item) {
-          updateQuantity(id, item.quantity - 1)
-          renderCart()
-        }
-      }
-    })
-
-    itemsContainer!.querySelectorAll<HTMLElement>('[data-qty-plus]').forEach((btn) => {
-      btn.onclick = () => {
-        const id = btn.dataset.qtyPlus!
-        const item = getCart().find((i) => i.product.id === id)
-        if (item) {
-          updateQuantity(id, item.quantity + 1)
-          renderCart()
-        }
-      }
-    })
-
-    itemsContainer!.querySelectorAll<HTMLElement>('[data-remove]').forEach((btn) => {
-      btn.onclick = () => {
-        const id = btn.dataset.remove!
-        removeFromCart(id)
-        renderCart()
-      }
-    })
   }
+
+  // ---------- BOTÕES DENTRO DO CARRINHO ----------
+  itemsContainer.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement
+    
+    const minusBtn = target.closest('[data-qty-minus]') as HTMLElement
+    if (minusBtn) {
+      const id = minusBtn.dataset.qtyMinus!
+      const item = getCart().find((i) => i.product.id === id)
+      if (item) updateQuantity(id, item.quantity - 1)
+      return
+    }
+
+    const plusBtn = target.closest('[data-qty-plus]') as HTMLElement
+    if (plusBtn) {
+      const id = plusBtn.dataset.qtyPlus!
+      const item = getCart().find((i) => i.product.id === id)
+      if (item) updateQuantity(id, item.quantity + 1)
+      return
+    }
+
+    const removeBtn = target.closest('[data-remove]') as HTMLElement
+    if (removeBtn) {
+      const id = removeBtn.dataset.remove!
+      removeFromCart(id)
+      return
+    }
+  })
 
   // ---------- CHECKOUT WHATSAPP ----------
   checkoutBtn.addEventListener('click', () => {
     sendOrderToWhatsApp()
   })
 
-  // ---------- ESCUTAR MUDANÇAS ----------
+  // ---------- ATUALIZAÇÃO EM TEMPO REAL ----------
   window.addEventListener('cart:updated', () => {
-    if (!drawer!.classList.contains('translate-x-full')) {
-      renderCart()
-    }
+    renderCart()
   })
 }

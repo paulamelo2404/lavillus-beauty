@@ -9,6 +9,7 @@ import { About } from './components/sections/About'
 import { Technology } from './components/sections/Technology'
 import { Collection, initCollection } from './components/sections/Collection'
 import { WhyUs } from './components/sections/WhyUs'
+import { Distributor } from './components/sections/Distributor'
 import { addToCart } from './utils/cart'
 import { products } from './data/products'
 
@@ -23,6 +24,7 @@ app.innerHTML = `
     ${Technology()}
     ${Collection()}
     ${WhyUs()}
+    ${Distributor()}
   </main>
 `
 

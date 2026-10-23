@@ -15,6 +15,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",
     "gsap": "^3.15.0",
+    "mesh-gradient-ts": "^1.0.6",
     "tailwindcss": "^4.3.3"
   }
 }

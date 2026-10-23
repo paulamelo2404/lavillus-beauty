@@ -1,5 +1,5 @@
 // =====================================================
-// PRODUCT ITEM — Card individual de produto
+// PRODUCT ITEM — Card individual com imagem vertical
 // =====================================================
 
 import type { Product } from '../../data/products'
@@ -7,27 +7,24 @@ import type { Product } from '../../data/products'
 export function ProductItem(product: Product): string {
   return `
     <div class="product-card group flex flex-col
-                bg-cream-50 border border-gold-200 rounded-sm
-                hover:border-gold-400 hover:shadow-md
-                transition-all duration-300 overflow-hidden">
+                bg-[#fdfaf6] border border-gray-200 rounded-sm
+                hover:border-gold-400 hover:shadow-xl
+                transition-all duration-500 overflow-hidden">
 
-      <!-- IMAGEM -->
-      <div class="relative aspect-square bg-cream-100 overflow-hidden">
+      <div class="relative aspect-4/5 bg-[#fdfaf6] overflow-hidden flex items-center justify-center p-6">
         <img
           src="${product.image}"
           alt="${product.name}"
-          class="w-full h-full object-contain p-6
-                 group-hover:scale-105
-                 transition-transform duration-500"
+          class="w-full h-full object-contain mix-blend-multiply
+                 group-hover:scale-105 transition-transform duration-700 ease-out"
           onerror="this.style.display='none'"
         />
       </div>
 
-      <!-- INFO -->
-      <div class="flex flex-col flex-1 p-5 sm:p-6">
+      <div class="flex flex-col flex-1 p-5 sm:p-6 border-t border-gray-100 bg-white">
 
         <p class="font-sans text-[9px] sm:text-[10px]
-                  tracking-[0.25em] text-gold-600 mb-2 uppercase">
+                  tracking-[0.25em] text-gold-600 mb-2 uppercase font-semibold">
           ${product.size}
         </p>
 
@@ -41,14 +38,13 @@ export function ProductItem(product: Product): string {
           ${product.description}
         </p>
 
-        <!-- ATIVOS -->
-        <div class="flex flex-wrap gap-2 mb-5">
+        <div class="flex flex-wrap gap-1.5 mb-5">
           ${product.actives
             .map(
               (active) => `
-            <span class="font-sans text-[9px] sm:text-[10px]
+            <span class="font-sans text-[8px] sm:text-[9px]
                          tracking-wider uppercase
-                         text-gold-700 bg-gold-100
+                         text-coffee-700 bg-gray-100
                          px-2 py-1 rounded-sm">
               ${active}
             </span>
@@ -57,14 +53,13 @@ export function ProductItem(product: Product): string {
             .join('')}
         </div>
 
-        <!-- BOTÃO ADD TO CART -->
         <button
           data-add-to-cart="${product.id}"
           class="w-full py-3
-                 bg-gold-500 text-white
-                 font-sans text-xs tracking-widest uppercase
-                 rounded-sm
-                 hover:bg-gold-600 transition-all duration-300"
+                 border border-gold-500 text-gold-600
+                 font-sans text-xs tracking-widest uppercase font-semibold
+                 rounded-sm bg-transparent
+                 hover:bg-gold-500 hover:text-white transition-all duration-300"
         >
           Add to Cart
         </button>

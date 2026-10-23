@@ -1,9 +1,6 @@
 // =====================================================
 // LINHAS DE PRODUTO — Lavillu's Beauty
 // =====================================================
-// Cada linha representa uma família de produtos com
-// identidade visual própria (cor, capa, descrição).
-// =====================================================
 
 export type LineId =
   | 'soft-collagen'
@@ -11,16 +8,15 @@ export type LineId =
   | 'coffee-intense'
   | 'texture-collagen'
   | 'daily-spa'
-  | 'home-care'
 
 export interface Line {
   id: LineId
-  name: string           // Nome exibido
-  tagline: string        // Frase curta da linha
-  description: string    // Descrição longa
-  color: string          // Classe Tailwind da cor principal da linha
-  colorHex: string       // Cor em hexadecimal (pra usar em estilos dinâmicos)
-  cover: string          // Caminho da imagem de capa (em /public/images/lines/)
+  name: string
+  tagline: string
+  description: string
+  color: string
+  colorHex: string
+  cover: string
 }
 
 export const lines: Line[] = [
@@ -73,15 +69,5 @@ export const lines: Line[] = [
     color: 'gold-600',
     colorHex: '#9A7530',
     cover: '/images/lines/daily-spa-cover.jpg',
-  },
-  {
-    id: 'home-care',
-    name: 'Home Care',
-    tagline: 'Professional Care at Home',
-    description:
-      'High-performance 300ml formulas developed to strengthen, hydrate and reveal healthier, more beautiful hair — salon quality at home.',
-    color: 'coffee-800',
-    colorHex: '#3A2A1E',
-    cover: '/images/lines/home-care-cover.jpg',
   },
 ]

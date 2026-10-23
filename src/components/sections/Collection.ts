@@ -36,9 +36,10 @@ export function Collection(): string {
         </div>
 
         <!-- CAPAS DAS LINHAS -->
+        <!-- Mobile: 2 colunas | Desktop: 5 colunas -->
         <div id="lines-showcase"
-             class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
-                    gap-5 sm:gap-6 lg:gap-8
+             class="grid grid-cols-2 lg:grid-cols-5
+                    gap-4 sm:gap-5 lg:gap-6
                     mb-20 sm:mb-24 lg:mb-32">
           ${lines.map(LineCard).join('')}
         </div>
@@ -63,6 +64,7 @@ export function Collection(): string {
 
           ${LineFilter()}
 
+          <!-- Grade de Produtos Original -->
           <div id="products-grid"
                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3
                       gap-6 sm:gap-8">
